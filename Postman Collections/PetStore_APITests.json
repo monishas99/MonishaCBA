@@ -155,7 +155,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"category\": {\n    \"id\": 1,\n    \"name\": \"Fish\"\n  },\n  \"name\": \"blue fish\",\n  \"photoUrls\": [\n    \"string\"\n  ],\n  \"tags\": [\n    {\n      \"id\": 1,\n      \"name\": \"Fresh water\"\n    }\n  ],\n  \"status\": \"available\"\n}",
+							"raw": "{\n  \"category\": {\n    \"id\": 1,\n    \"name\": \"Fish\"\n  },\n  \"name\": \"blue fish - abc\",\n  \"photoUrls\": [\n    \"string\"\n  ],\n  \"tags\": [\n    {\n      \"id\": 1,\n      \"name\": \"Fresh water\"\n    }\n  ],\n  \"status\": \"available\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
