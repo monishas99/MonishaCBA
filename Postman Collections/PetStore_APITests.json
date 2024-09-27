@@ -190,6 +190,32 @@
 						"url": "{{baseUrl}}/pet"
 					},
 					"response": []
+				},
+				{
+					"name": "4. Find pet by ID | find the pet created in Test 1",
+					"id": "897285aa-0756-4e43-9abc-51eda02bc1ca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"key": "api_key",
+								"value": "{{apiKey}}",
+								"in": "header"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{baseUrl}}/pet/9223372036854775807"
+					},
+					"response": []
 				}
 			],
 			"id": "99757401-b176-4252-9240-8730e8a25b09"
