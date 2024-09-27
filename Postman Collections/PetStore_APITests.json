@@ -27,6 +27,9 @@
 									"pm.test(\"Status is available\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    console.log(jsonData.id, jsonData.status)",
+									"",
+									"    pm.collectionVariables.set(\"Pet1Id\", jsonData.id );",
+									"    console.log(pm.collectionVariables.get(\"Pet1Id\"));",
 									"    pm.expect(jsonData.status).to.eql(\"available\");",
 									"});"
 								],
@@ -57,7 +60,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\": 0,\n  \"category\": {\n    \"id\": 0,\n    \"name\": \"string\"\n  },\n  \"name\": \"doggie\",\n  \"photoUrls\": [\n    \"string\"\n  ],\n  \"tags\": [\n    {\n      \"id\": 0,\n      \"name\": \"string\"\n    }\n  ],\n  \"status\": \"available\"\n}",
+							"raw": "{\n  \"category\": {\n    \"name\": \"Dogs\"\n  },\n  \"name\": \"husky husky\",\n  \"photoUrls\": [\n  ],\n  \"tags\": [\n    {\n      \"name\": \"Siberian Husky\"\n    }\n  ],\n  \"status\": \"available\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -219,6 +222,12 @@
 				}
 			],
 			"id": "99757401-b176-4252-9240-8730e8a25b09"
+		}
+	],
+	"variable": [
+		{
+			"key": "Pet1Id",
+			"value": ""
 		}
 	]
 }
