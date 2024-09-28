@@ -1118,7 +1118,7 @@
 						}
 					],
 					"id": "705f403f-dfd0-44e5-b4e5-a5a1cee29a58",
-					"description": "This folder contains test scenarios for the endpoint - Update an existing pet.\n\n**Positive Scenarios:**\n\n1. Update an existing pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Update an existing pet | update status\n    \n3. Update an existing pet | minimal required fields\n    \n4. Update an existing pet | optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Update an non-existent pet\n    \n2. Update a pet with an invalid status (e.g., a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Update a pet with an empty JSON object.\n    \n4. Update a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Update a pet | missing required fields"
+					"description": "This folder contains test scenarios for the endpoint - Update an existing pet.\n\n**Positive Scenarios:**\n\n1. Update an existing pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Update an existing pet | update status\n    \n3. Update an existing pet | minimal required fields\n    \n4. Update an existing pet | optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Update an non-existent pet\n    \n2. Update a pet with an invalid status (e.g a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Update a pet with an empty JSON object.\n    \n4. Update a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Update a pet | missing required fields"
 				},
 				{
 					"name": "3. Update pet added in Test 1",
