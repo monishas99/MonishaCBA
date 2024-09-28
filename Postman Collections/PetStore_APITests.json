@@ -1044,7 +1044,7 @@
 						}
 					],
 					"id": "705f403f-dfd0-44e5-b4e5-a5a1cee29a58",
-					"description": "This folder contains test scenarios for the endpoint - Add a new pet to the store.\n\n**Positive Scenarios:**\n\n1. Create a pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Create a pet with only the required fields (e.g., name, status).\n    \n3. Create a pet with all optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Attempt to create a pet without any required fields.\n    \n2. Create a pet with an invalid status (e.g., a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Send a request with an empty JSON object.\n    \n4. Attempt to create a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Attempt to create a pet with an existing pet ID"
+					"description": "This folder contains test scenarios for the endpoint - Update an existing pet.\n\n**Positive Scenarios:**\n\n1. Update an existing pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Update an existing pet | update status\n    \n3. Update an existing pet | minimal required fields\n    \n4. Update an existing pet | optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Update an non-existent pet\n    \n2. Update a pet with an invalid status (e.g., a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Update a pet with an empty JSON object.\n    \n4. Update a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Update a pet | missing required fields"
 				},
 				{
 					"name": "3. Update pet added in Test 1",
@@ -1200,32 +1200,26 @@
 	],
 	"variable": [
 		{
-			"id": "7a105351-1227-4886-baa6-97c8d908fc68",
 			"key": "Pet1Id",
 			"value": ""
 		},
 		{
-			"id": "06483255-bd91-4d6b-bdc0-64ddc99778cb",
 			"key": "Pet1Name",
 			"value": ""
 		},
 		{
-			"id": "c3b7bb68-8724-4d96-95e3-b7548623e203",
 			"key": "Pet2Name",
 			"value": ""
 		},
 		{
-			"id": "5fc158bb-4178-473d-b990-0912346b85fc",
 			"key": "Pet2Id",
 			"value": ""
 		},
 		{
-			"id": "4f5b890a-71b3-4c32-bc2b-a53501b4958c",
 			"key": "Pet3Name",
 			"value": ""
 		},
 		{
-			"id": "65a8b782-7056-48f1-88c2-9762923fcea5",
 			"key": "Pet3Id",
 			"value": ""
 		}
