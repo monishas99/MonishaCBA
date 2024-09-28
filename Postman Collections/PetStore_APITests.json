@@ -1071,7 +1071,7 @@
 													"",
 													"pm.test(\"Error message mentions missing fields\", function () {",
 													"    const jsonData = pm.response.json();",
-													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"    pm.expect(pm.response.text()).to.include(\"Validation exception\");",
 													"});"
 												],
 												"type": "text/javascript",
@@ -1092,7 +1092,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -1101,7 +1101,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"{{Pet1Id}}\",\n  \"name\": \"Duke\",\n  \"status\": \"pending\"\n}",
+											"raw": "{\n  \"name\": \"Duke\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
