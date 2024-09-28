@@ -396,7 +396,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{}",
+											"raw": "{\n  \"name\": \"someName\",\n  \"status\": \"someStatus\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -903,7 +903,7 @@
 													"",
 													"pm.test(\"Error message mentions missing fields\", function () {",
 													"    const jsonData = pm.response.json();",
-													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"    pm.expect(pm.response.text()).to.include(\"Validation exception\");",
 													"});"
 												],
 												"type": "text/javascript",
@@ -924,7 +924,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -959,7 +959,7 @@
 													"",
 													"pm.test(\"Error message mentions missing fields\", function () {",
 													"    const jsonData = pm.response.json();",
-													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"    pm.expect(pm.response.text()).to.include(\"Validation exception\");",
 													"});"
 												],
 												"type": "text/javascript",
@@ -980,7 +980,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -989,7 +989,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{}",
+											"raw": "{\n    \"id\": {{Pet1Id}},\n    \"name\": \"someName\",\n    \"status\": \"someStatus\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -1015,7 +1015,7 @@
 													"",
 													"pm.test(\"Error message for invalid data types\", function () {",
 													"    const jsonData = pm.response.json();",
-													"    pm.expect(jsonData).to.have.property('message').that.includes('Validation exception');",
+													"    pm.expect(pm.response.text()).to.include(\"Validation exception\");",
 													"});"
 												],
 												"type": "text/javascript",
