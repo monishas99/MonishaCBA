@@ -10,72 +10,80 @@
 			"item": [
 				{
 					"name": "Add a new pet to the store",
-					"item": [],
-					"id": "d8c62482-e63c-4f5a-ae2d-02321683cc21"
-				},
-				{
-					"name": "1. Add a new pet",
-					"event": [
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "445c8fc9-1300-4b50-a862-426e465eff47",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"// pm.test(\"Response time is less than 200ms\", function () {",
-									"//     pm.expect(pm.response.responseTime).to.be.below(200);",
-									"// });",
-									"",
-									"pm.test(\"Status is available\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    console.log(jsonData.id, jsonData.status)",
-									"",
-									"    pm.collectionVariables.set(\"Pet1Id\", jsonData.id );",
-									"    console.log(pm.collectionVariables.get(\"Pet1Id\"));",
-									"    pm.expect(jsonData.status).to.eql(\"available\");",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
+							"name": "Positive Scenarios",
+							"item": [
+								{
+									"name": "1. Add a new pet",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"// pm.test(\"Response time is less than 200ms\", function () {",
+													"//     pm.expect(pm.response.responseTime).to.be.below(200);",
+													"// });",
+													"",
+													"pm.test(\"Status is available\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    console.log(jsonData.id, jsonData.status)",
+													"",
+													"    pm.collectionVariables.set(\"Pet1Id\", jsonData.id );",
+													"    console.log(pm.collectionVariables.get(\"Pet1Id\"));",
+													"    pm.expect(jsonData.status).to.eql(\"available\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "2b8e27c9-9dec-4322-8ec1-d808d502999d",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"category\": {\n    \"name\": \"Dogs\"\n  },\n  \"name\": \"husky husky\",\n  \"photoUrls\": [\n  ],\n  \"tags\": [\n    {\n      \"name\": \"Siberian Husky\"\n    }\n  ],\n  \"status\": \"available\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								}
+							],
+							"id": "6429961a-c1f0-439b-b020-7cfe8f2a7454"
 						}
 					],
-					"id": "2b8e27c9-9dec-4322-8ec1-d808d502999d",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "oauth2",
-							"oauth2": {
-								"scope": "read:pets write:pets",
-								"authUrl": "https://petstore.swagger.io/oauth/authorize",
-								"grant_type": "implicit"
-							}
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"category\": {\n    \"name\": \"Dogs\"\n  },\n  \"name\": \"husky husky\",\n  \"photoUrls\": [\n  ],\n  \"tags\": [\n    {\n      \"name\": \"Siberian Husky\"\n    }\n  ],\n  \"status\": \"available\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{baseUrl}}/pet"
-					},
-					"response": []
+					"id": "d8c62482-e63c-4f5a-ae2d-02321683cc21",
+					"description": "This folder contains test scenarios for the endpoint - Add a new pet to the store.  \n\n**Positive Scenarios:**\n\n1. Create a pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Create a pet with only the required fields (e.g., name, status).\n    \n3. Create a pet with all optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Attempt to create a pet without any required fields.\n    \n2. Create a pet with an invalid status (e.g., a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Send a request with an empty JSON object.\n    \n4. Attempt to create a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Send a malformed JSON request (e.g., missing closing brace).\n    \n6. Attempt to create a pet with an existing pet ID (if pet IDs are supposed to be unique).\n    \n\n**Boundary Scenarios:**\n\n1. Create a pet with a very long name (validate maximum length if any).\n    \n2. Create a pet with a very large pet ID."
 				},
 				{
 					"name": "3. Update pet added in Test 1",
