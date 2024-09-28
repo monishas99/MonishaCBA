@@ -557,13 +557,15 @@
 													"",
 													"pm.test(\"Verify the response\", function () {",
 													"    var jsonData = pm.response.json();",
-													"    pm.collectionVariables.set(\"Pet1Name\", jsonData.name );",
-													"    pm.expect(jsonData.name).to.eql(\"timtam\");",
-													"    pm.expect(jsonData.id).to.not.eql(null);",
-													"    pm.collectionVariables.set(\"Pet1Id\", jsonData.id );",
+													"    pm.collectionVariables.set(\"Pet1Name-Modified\", jsonData.name );",
+													"    pm.expect(jsonData.name).to.eql(\"timtam - changed\");",
+													"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"Pet1Id\"));",
 													"    pm.expect(jsonData.category.id).to.eql(11);",
 													"    pm.expect(jsonData.category.name).to.eql(\"Fish\");",
-													"    pm.expect(jsonData.tags).to.not.eql([]);",
+													"    pm.expect(jsonData.tags[0].id).to.eql(100);",
+													"    pm.expect(jsonData.tags[1].id).to.eql(200);",
+													"    pm.expect(jsonData.tags[0].name).to.eql(\"Freshwater\");",
+													"    pm.expect(jsonData.tags[1].name).to.eql(\"small size\");",
 													"});",
 													"",
 													""
@@ -586,7 +588,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -595,7 +597,83 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"name\": \"timtam\",\n  \"photoUrls\": [],\n  \"category\": {\n    \"id\": \"011\",\n    \"name\": \"Fish\"\n  },\n  \"tags\": [\n    {\n      \"id\": \"100\",\n      \"name\": \"Freshwater\"\n    }\n\n  ],\n  \"status\": \"available\"\n}",
+											"raw": "{\n    \"id\": {{Pet1Id}},\n    \"category\": {\n        \"id\": 11,\n        \"name\": \"Fish\"\n    },\n    \"name\": \"timtam - changed\",\n    \"photoUrls\": [],\n    \"tags\": [\n        {\n            \"id\": 100,\n            \"name\": \"Freshwater\"\n        },\n        {\n            \"id\": 200,\n            \"name\": \"small size\"\n        }\n    ],\n    \"status\": \"available\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								},
+								{
+									"name": "2. Update status",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 500ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);",
+													"});",
+													"",
+													"pm.test(\"Status is sold\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    //console.log(jsonData.id, jsonData.status)",
+													"    pm.expect(jsonData.status).to.eql(\"sold\");",
+													"});",
+													"",
+													"pm.test(\"Verify the response\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    pm.collectionVariables.set(\"Pet1Name-Modified\", jsonData.name );",
+													"    pm.expect(jsonData.name).to.eql(\"timtam - changed\");",
+													"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"Pet1Id\"));",
+													"    pm.expect(jsonData.category.id).to.eql(11);",
+													"    pm.expect(jsonData.category.name).to.eql(\"Fish\");",
+													"    pm.expect(jsonData.tags[0].id).to.eql(100);",
+													"    pm.expect(jsonData.tags[1].id).to.eql(200);",
+													"    pm.expect(jsonData.tags[0].name).to.eql(\"Freshwater\");",
+													"    pm.expect(jsonData.tags[1].name).to.eql(\"small size\");",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "9725ca24-9e73-4361-90ed-15a165e13462",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": {{Pet1Id}},\n    \"category\": {\n        \"id\": 11,\n        \"name\": \"Fish\"\n    },\n    \"name\": \"timtam - changed\",\n    \"photoUrls\": [],\n    \"tags\": [\n        {\n            \"id\": 100,\n            \"name\": \"Freshwater\"\n        },\n        {\n            \"id\": 200,\n            \"name\": \"small size\"\n        }\n    ],\n    \"status\": \"sold\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -683,7 +761,7 @@
 									"response": []
 								},
 								{
-									"name": "2. Required fields",
+									"name": "3. Required fields",
 									"event": [
 										{
 											"listen": "test",
@@ -1221,6 +1299,10 @@
 		},
 		{
 			"key": "Pet3Id",
+			"value": ""
+		},
+		{
+			"key": "Pet1Name-Modified",
 			"value": ""
 		}
 	]
