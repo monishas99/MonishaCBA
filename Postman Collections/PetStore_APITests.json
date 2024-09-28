@@ -841,13 +841,13 @@
 											"script": {
 												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
 												"exec": [
-													"pm.test(\"Status code is 405\", function () {",
-													"    pm.response.to.have.status(405);",
+													"pm.test(\"Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
 													"});",
 													"",
-													"pm.test(\"Error message mentions missing fields\", function () {",
+													"pm.test(\"Error message for non-existent pet\", function () {",
 													"    const jsonData = pm.response.json();",
-													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('Pet not found');",
 													"});"
 												],
 												"type": "text/javascript",
@@ -868,7 +868,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -877,7 +877,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"category\": {\n    \"id\": \"010\",\n    \"name\": \"Dogs\"\n  }\n}",
+											"raw": "{\n    \"id\": 150,\n    \"name\": \"Goldie\",\n    \"status\": \"available\",\n    \"category\": {\n    \"id\": \"010\",\n    \"name\": \"Dogs\"\n  }\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -1002,7 +1002,7 @@
 									"response": []
 								},
 								{
-									"name": "4. Invalid datatypes",
+									"name": "2. Invalid datatypes",
 									"event": [
 										{
 											"listen": "test",
