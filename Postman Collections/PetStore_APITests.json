@@ -686,7 +686,7 @@
 									"response": []
 								},
 								{
-									"name": "3. Optional fields",
+									"name": "4. Optional fields",
 									"event": [
 										{
 											"listen": "test",
@@ -776,18 +776,16 @@
 													"    pm.expect(pm.response.responseTime).to.be.below(500);",
 													"});",
 													"",
-													"pm.test(\"Status is pending\", function () {",
+													"pm.test(\"Status is available\", function () {",
 													"    var jsonData = pm.response.json();",
 													"    //console.log(jsonData.id, jsonData.status)",
-													"    pm.expect(jsonData.status).to.eql(\"pending\");",
+													"    pm.expect(jsonData.status).to.eql(\"available\");",
 													"});",
 													"",
 													"pm.test(\"Verify the response\", function () {",
-													"    var jsonData = pm.response.json();",
-													"    pm.collectionVariables.set(\"Pet2Name\", jsonData.name );",
+													"    var jsonData = pm.response.json();    ",
 													"    pm.expect(jsonData.name).to.eql(\"Goldie\");",
-													"    pm.expect(jsonData.id).to.not.eql(null);",
-													"    pm.collectionVariables.set(\"Pet2Id\", jsonData.id );",
+													"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"Pet2Id\"));    ",
 													"});",
 													"",
 													""
@@ -810,7 +808,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -819,7 +817,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"name\": \"Goldie\",\n  \"status\": \"pending\"\n}",
+											"raw": "{\n    \"id\": {{Pet2Id}},\n    \"name\": \"Goldie\",\n    \"status\": \"available\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
