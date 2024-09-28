@@ -9,6 +9,11 @@
 			"name": "PetScenarios",
 			"item": [
 				{
+					"name": "New Folder",
+					"item": [],
+					"id": "d8c62482-e63c-4f5a-ae2d-02321683cc21"
+				},
+				{
 					"name": "1. Add a new pet",
 					"event": [
 						{
