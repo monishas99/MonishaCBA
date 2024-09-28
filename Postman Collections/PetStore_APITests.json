@@ -709,10 +709,8 @@
 													"",
 													"pm.test(\"Verify the response\", function () {",
 													"    var jsonData = pm.response.json();",
-													"    pm.collectionVariables.set(\"Pet3Name\", jsonData.name );",
 													"    pm.expect(jsonData.name).to.eql(\"husky husky :)\");",
 													"    pm.expect(jsonData.id).to.not.eql(null);",
-													"    pm.collectionVariables.set(\"Pet3Id\", jsonData.id );",
 													"    pm.expect(jsonData.category.id).to.eql(10);",
 													"    pm.expect(jsonData.category.name).to.eql(\"Dogs\");",
 													"    pm.expect(jsonData.photoUrls).to.not.eql([]);",
@@ -739,7 +737,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -748,7 +746,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"name\": \"husky husky :)\",\n  \"photoUrls\": [\n    \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thedrakecenter.com%2Fservices%2Fdogs%2Fbreeds%2Fsiberian-husky&psig=AOvVaw3P_M_6Jp_vPZeJgQaJh36h&ust=1727587113846000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwiZzJfT8eSIAxWGcWwGHeiUOsEQjRx6BAgAEBg\",\n    \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fdogtime.com%2Fdog-breeds%2Fsiberian-husky&psig=AOvVaw1no6LFN2rV7q6jGZPzqYyQ&ust=1727587115898000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwi96JTU8eSIAxURfWwGHfhPJv4QjRx6BAgAEBg\"\n  ],\n  \"category\": {\n    \"id\": \"010\",\n    \"name\": \"Dogs\"\n  },\n  \"tags\": [\n    {\n      \"id\": \"100\",\n      \"name\": \"Siberian Husky\"\n    },\n    {\n      \"id\": \"101\",\n      \"name\": \"high-energy dogs\"\n    },\n    {\n      \"id\": \"102\",\n      \"name\": \"more outdoor time dogs\"\n    }\n\n  ],\n  \"status\": \"sold\"\n}",
+											"raw": "{\n    \"id\": {{Pet3Id}},\n    \"category\": {\n        \"id\": 10,\n        \"name\": \"Dogs\"\n    },\n    \"name\": \"husky husky :)\",\n    \"photoUrls\": [\n        \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thedrakecenter.com%2Fservices%2Fdogs%2Fbreeds%2Fsiberian-husky&psig=AOvVaw3P_M_6Jp_vPZeJgQaJh36h&ust=1727587113846000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwiZzJfT8eSIAxWGcWwGHeiUOsEQjRx6BAgAEBg\"\n            ],\n    \"tags\": [\n        {\n            \"id\": 100,\n            \"name\": \"Siberian Husky\"\n        },\n        {\n            \"id\": 101,\n            \"name\": \"high-energy dogs\"\n        },\n        {\n            \"id\": 102,\n            \"name\": \"more outdoor time dogs\"\n        },\n        {\n            \"id\": 103,\n            \"name\": \"friendly\"\n        }\n    ],\n    \"status\": \"sold\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -836,7 +834,7 @@
 							"name": "Negative Scenarios",
 							"item": [
 								{
-									"name": "1. Without required fields",
+									"name": "1. update non-existent pet",
 									"event": [
 										{
 											"listen": "test",
