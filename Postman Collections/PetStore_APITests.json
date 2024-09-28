@@ -528,6 +528,525 @@
 					"description": "This folder contains test scenarios for the endpoint - Add a new pet to the store.\n\n**Positive Scenarios:**\n\n1. Create a pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Create a pet with only the required fields (e.g., name, status).\n    \n3. Create a pet with all optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Attempt to create a pet without any required fields.\n    \n2. Create a pet with an invalid status (e.g., a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Send a request with an empty JSON object.\n    \n4. Attempt to create a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Attempt to create a pet with an existing pet ID"
 				},
 				{
+					"name": "Update an existing pet in the store",
+					"item": [
+						{
+							"name": "Positive Scenarios",
+							"item": [
+								{
+									"name": "1. Valid Input",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 500ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);",
+													"});",
+													"",
+													"pm.test(\"Status is available\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    //console.log(jsonData.id, jsonData.status)",
+													"    pm.expect(jsonData.status).to.eql(\"available\");",
+													"});",
+													"",
+													"pm.test(\"Verify the response\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    pm.collectionVariables.set(\"Pet1Name\", jsonData.name );",
+													"    pm.expect(jsonData.name).to.eql(\"timtam\");",
+													"    pm.expect(jsonData.id).to.not.eql(null);",
+													"    pm.collectionVariables.set(\"Pet1Id\", jsonData.id );",
+													"    pm.expect(jsonData.category.id).to.eql(11);",
+													"    pm.expect(jsonData.category.name).to.eql(\"Fish\");",
+													"    pm.expect(jsonData.tags).to.not.eql([]);",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "ad49e497-1436-419d-b1f7-235700503bb0",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"timtam\",\n  \"photoUrls\": [],\n  \"category\": {\n    \"id\": \"011\",\n    \"name\": \"Fish\"\n  },\n  \"tags\": [\n    {\n      \"id\": \"100\",\n      \"name\": \"Freshwater\"\n    }\n\n  ],\n  \"status\": \"available\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								},
+								{
+									"name": "3. Optional fields",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 500ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);",
+													"});",
+													"",
+													"pm.test(\"Status is sold\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    //console.log(jsonData.id, jsonData.status)",
+													"    pm.expect(jsonData.status).to.eql(\"sold\");",
+													"});",
+													"",
+													"pm.test(\"Verify the response\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    pm.collectionVariables.set(\"Pet3Name\", jsonData.name );",
+													"    pm.expect(jsonData.name).to.eql(\"husky husky :)\");",
+													"    pm.expect(jsonData.id).to.not.eql(null);",
+													"    pm.collectionVariables.set(\"Pet3Id\", jsonData.id );",
+													"    pm.expect(jsonData.category.id).to.eql(10);",
+													"    pm.expect(jsonData.category.name).to.eql(\"Dogs\");",
+													"    pm.expect(jsonData.photoUrls).to.not.eql([]);",
+													"    pm.expect(jsonData.tags).to.not.eql([]);",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "a99d5752-4891-4e2f-8ab4-94e37a4fdc71",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"husky husky :)\",\n  \"photoUrls\": [\n    \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thedrakecenter.com%2Fservices%2Fdogs%2Fbreeds%2Fsiberian-husky&psig=AOvVaw3P_M_6Jp_vPZeJgQaJh36h&ust=1727587113846000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwiZzJfT8eSIAxWGcWwGHeiUOsEQjRx6BAgAEBg\",\n    \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fdogtime.com%2Fdog-breeds%2Fsiberian-husky&psig=AOvVaw1no6LFN2rV7q6jGZPzqYyQ&ust=1727587115898000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwi96JTU8eSIAxURfWwGHfhPJv4QjRx6BAgAEBg\"\n  ],\n  \"category\": {\n    \"id\": \"010\",\n    \"name\": \"Dogs\"\n  },\n  \"tags\": [\n    {\n      \"id\": \"100\",\n      \"name\": \"Siberian Husky\"\n    },\n    {\n      \"id\": \"101\",\n      \"name\": \"high-energy dogs\"\n    },\n    {\n      \"id\": \"102\",\n      \"name\": \"more outdoor time dogs\"\n    }\n\n  ],\n  \"status\": \"sold\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								},
+								{
+									"name": "2. Required fields",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 500ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);",
+													"});",
+													"",
+													"pm.test(\"Status is pending\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    //console.log(jsonData.id, jsonData.status)",
+													"    pm.expect(jsonData.status).to.eql(\"pending\");",
+													"});",
+													"",
+													"pm.test(\"Verify the response\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    pm.collectionVariables.set(\"Pet2Name\", jsonData.name );",
+													"    pm.expect(jsonData.name).to.eql(\"Goldie\");",
+													"    pm.expect(jsonData.id).to.not.eql(null);",
+													"    pm.collectionVariables.set(\"Pet2Id\", jsonData.id );",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "df8fbc79-fda2-4b50-9ca7-898bcb32180a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Goldie\",\n  \"status\": \"pending\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								}
+							],
+							"id": "310240d9-2def-4648-92b0-1a363f87c2d2"
+						},
+						{
+							"name": "Negative Scenarios",
+							"item": [
+								{
+									"name": "1. Without required fields",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 405\", function () {",
+													"    pm.response.to.have.status(405);",
+													"});",
+													"",
+													"pm.test(\"Error message mentions missing fields\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "6bb75c65-87b2-4a39-b72b-2cab113b376b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"category\": {\n    \"id\": \"010\",\n    \"name\": \"Dogs\"\n  }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								},
+								{
+									"name": "3.Empty Json Body",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 405\", function () {",
+													"    pm.response.to.have.status(405);",
+													"});",
+													"",
+													"pm.test(\"Error message mentions missing fields\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "286e2352-19e7-4a76-865c-98da8c8460eb",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								},
+								{
+									"name": "2. Incorrect Status Enum",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 405\", function () {",
+													"    pm.response.to.have.status(405);",
+													"});",
+													"",
+													"pm.test(\"Error message mentions missing fields\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "28e0205d-d219-42b4-9f78-1ca8cdb47fc2",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								},
+								{
+									"name": "4. Invalid datatypes",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 405\", function () {",
+													"    pm.response.to.have.status(405);",
+													"});",
+													"",
+													"pm.test(\"Error message mentions missing fields\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "e85a918f-eb71-4d63-a8fc-240c3d8500a1",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"invalidID\",\n  \"name\": 23,\n  \"status\": 123\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								},
+								{
+									"name": "5. Add pet with existing ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "445c8fc9-1300-4b50-a862-426e465eff47",
+												"exec": [
+													"pm.test(\"Status code is 405\", function () {",
+													"    pm.response.to.have.status(405);",
+													"});",
+													"",
+													"pm.test(\"Error message mentions missing fields\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "87f82f37-c54c-462c-9ce1-ff3e62386ea0",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "oauth2",
+											"oauth2": {
+												"scope": "read:pets write:pets",
+												"authUrl": "https://petstore.swagger.io/oauth/authorize",
+												"grant_type": "implicit"
+											}
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"{{Pet1Id}}\",\n  \"name\": \"Duke\",\n  \"status\": \"pending\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/pet"
+									},
+									"response": []
+								}
+							],
+							"id": "f102422c-0cbe-4f47-83d2-d200c751b25d"
+						}
+					],
+					"id": "705f403f-dfd0-44e5-b4e5-a5a1cee29a58",
+					"description": "This folder contains test scenarios for the endpoint - Add a new pet to the store.\n\n**Positive Scenarios:**\n\n1. Create a pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Create a pet with only the required fields (e.g., name, status).\n    \n3. Create a pet with all optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Attempt to create a pet without any required fields.\n    \n2. Create a pet with an invalid status (e.g., a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Send a request with an empty JSON object.\n    \n4. Attempt to create a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Attempt to create a pet with an existing pet ID"
+				},
+				{
 					"name": "3. Update pet added in Test 1",
 					"event": [
 						{
