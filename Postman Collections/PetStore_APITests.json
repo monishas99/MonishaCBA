@@ -1002,7 +1002,7 @@
 									"response": []
 								},
 								{
-									"name": "2. Invalid datatypes",
+									"name": "4. Invalid datatypes",
 									"event": [
 										{
 											"listen": "test",
@@ -1013,9 +1013,9 @@
 													"    pm.response.to.have.status(405);",
 													"});",
 													"",
-													"pm.test(\"Error message mentions missing fields\", function () {",
+													"pm.test(\"Error message for invalid data types\", function () {",
 													"    const jsonData = pm.response.json();",
-													"    pm.expect(pm.response.text()).to.include(\"Invalid Input\");",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('Validation exception');",
 													"});"
 												],
 												"type": "text/javascript",
@@ -1036,7 +1036,7 @@
 												"grant_type": "implicit"
 											}
 										},
-										"method": "POST",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -1045,7 +1045,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"invalidID\",\n  \"name\": 23,\n  \"status\": 123\n}",
+											"raw": "{\n  \"id\": \"invalid1\",\n  \"name\": 123,\n  \"status\": 777\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -1058,7 +1058,7 @@
 									"response": []
 								},
 								{
-									"name": "5. Add pet with existing ID",
+									"name": "5. Missing required fields",
 									"event": [
 										{
 											"listen": "test",
