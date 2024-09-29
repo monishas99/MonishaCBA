@@ -1119,6 +1119,271 @@
 					],
 					"id": "705f403f-dfd0-44e5-b4e5-a5a1cee29a58",
 					"description": "This folder contains test scenarios for the endpoint - Update an existing pet.\n\n**Positive Scenarios:**\n\n1. Update an existing pet with valid data (name, category, status, tags, photoUrls).\n    \n2. Update an existing pet | update status\n    \n3. Update an existing pet | minimal required fields\n    \n4. Update an existing pet | optional fields provided.\n    \n\n**Negative Scenarios:**\n\n1. Update an non-existent pet\n    \n2. Update a pet with an invalid status (e.g a status not in the allowed set \\[“available”, “pending”, “sold”\\]).\n    \n3. Update a pet with an empty JSON object.\n    \n4. Update a pet with invalid data types (e.g., numbers for name, strings for ID).\n    \n5. Update a pet | missing required fields"
+				},
+				{
+					"name": "Get pets by status",
+					"item": [
+						{
+							"name": "Positive Scenarios",
+							"item": [
+								{
+									"name": "Staus - Available",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response contains an array of pets\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an('array');",
+													"});",
+													"",
+													"pm.test(\"Pets in response have 'available' status\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    jsonData.forEach(function (pet) {",
+													"        pm.expect(pet).to.have.property('status', 'available');",
+													"    });",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "e70b9164-b1a1-43d1-8aa4-45313affaa81",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/pet/findByStatus?status=available",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"findByStatus"
+											],
+											"query": [
+												{
+													"key": "status",
+													"value": "available"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Staus - pending",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response contains an array of pets\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an('array');",
+													"});",
+													"",
+													"pm.test(\"Pets in response have 'pending' status\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    jsonData.forEach(function (pet) {",
+													"        pm.expect(pet).to.have.property('status', 'pending');",
+													"    });",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "2b2aae71-400f-4a54-98a4-dbcb00da0bb5",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/pet/findByStatus?status=pending",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"findByStatus"
+											],
+											"query": [
+												{
+													"key": "status",
+													"value": "pending"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Status - sold",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response contains an array of pets\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an('array');",
+													"});",
+													"",
+													"pm.test(\"Pets in response have 'sold' status\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    jsonData.forEach(function (pet) {",
+													"        pm.expect(pet).to.have.property('status', 'sold');",
+													"    });",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "bf6ebcad-254b-4008-a140-f37be3bd9ae1",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/pet/findByStatus?status=sold",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"findByStatus"
+											],
+											"query": [
+												{
+													"key": "status",
+													"value": "sold"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "d0d2935d-8bfb-4fd7-9901-e38762d0fdb9"
+						},
+						{
+							"name": "Negative Scenarios",
+							"item": [
+								{
+									"name": "No Status",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Error message for missing status parameter\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(pm.response.text()).to.include(\"status\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "5a352b46-666e-4b0a-9858-9fbf4d350cb7",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/pet/findByStatus"
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid Status",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Error message for invalid status value\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('Invalid status value');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "33c1a646-db8d-4bcf-ad73-da663792fc67",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/pet/findByStatus?status=invalid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"findByStatus"
+											],
+											"query": [
+												{
+													"key": "status",
+													"value": "invalid"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "668651aa-b619-414c-bfa0-ec9d5862b6b1"
+						}
+					],
+					"id": "068df17c-3d7b-4673-b4df-9b30c10a20f2",
+					"description": "This folder contains test scenarios for the endpoint - Get Pets by status.\n\n**Positive Scenarios:**\n\n1. Get pets with \"available\" status\n    \n2. Get pets with \"pending\" status\n    \n3. Get pets with \"sold\" status\n    \n\n**Negative Scenarios:**\n\n1. Get pets with no status parameter\n    \n2. Get pets with \"invalid\" status"
 				}
 			],
 			"id": "99757401-b176-4252-9240-8730e8a25b09"
