@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "694ae308-9a4a-4f92-8663-1500aa48a366",
 		"name": "Pet_Store",
+		"description": "This repository contains API tests for the PET endpoint of a Swagger-based API - [https://petstore.swagger.io/v2/swagger.json](https://petstore.swagger.io/v2/swagger.json). The tests are designed to validate various operations (GET, POST, PUT, DELETE) on the PET resource",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "5096838-694ae308-9a4a-4f92-8663-1500aa48a366"
 	},
@@ -2690,37 +2691,37 @@
 	],
 	"variable": [
 		{
-			"id": "486b715b-88fa-450f-8b65-3d040b6193e5",
+			"id": "c016f5c0-7ca2-44a8-814c-e40fa7d028d3",
 			"key": "Pet1Id",
 			"value": ""
 		},
 		{
-			"id": "a8823fdb-da00-4018-af83-7e161298dedf",
+			"id": "86121030-def2-482f-8cf7-6b4c58a19534",
 			"key": "Pet1Name",
 			"value": ""
 		},
 		{
-			"id": "96f611c4-5875-4811-bb5b-d3486ef281c1",
+			"id": "bbf4f15f-2318-4ceb-ad70-dddce7fa1220",
 			"key": "Pet2Name",
 			"value": ""
 		},
 		{
-			"id": "0fba38c3-cf0c-4fb3-9345-1c15c857250c",
+			"id": "c7ec4699-3c46-4518-9f67-7e471b10f981",
 			"key": "Pet2Id",
 			"value": ""
 		},
 		{
-			"id": "6f1501a3-be05-4494-821b-e2cb2c004eaf",
+			"id": "c9e85cc7-3b1d-42ec-8069-d0b2f9430824",
 			"key": "Pet3Name",
 			"value": ""
 		},
 		{
-			"id": "08340e8f-2ab3-4525-9e60-c987799fd4a8",
+			"id": "87ce22f4-b194-4694-ae52-f75707ff1202",
 			"key": "Pet3Id",
 			"value": ""
 		},
 		{
-			"id": "e78a143f-6e6f-42d1-b757-998b081bd343",
+			"id": "9de6f99e-2c1a-4f4c-b78c-00e47146d406",
 			"key": "Pet1Name-Modified",
 			"value": ""
 		}
