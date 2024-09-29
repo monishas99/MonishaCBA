@@ -1635,7 +1635,591 @@
 							"id": "e3b2893e-0bd5-452d-acc3-dfcc4766fb0b"
 						}
 					],
-					"id": "21756b83-2348-4785-84db-349076154f3c"
+					"id": "21756b83-2348-4785-84db-349076154f3c",
+					"description": "This folder contains test scenarios for the endpoint - Upload Image\n\n**Positive Scenarios:**\n\n1. Successful upload\n    \n\n**Negative Scenarios:**\n\n1. No file selected\n    \n2. Invalid file type | txt file\n    \n3. No metadata information provided\n    \n4. Pet Id incorrect value | string datatype used"
+				},
+				{
+					"name": "Find pet by Id",
+					"item": [
+						{
+							"name": "Positive Scenarios",
+							"item": [
+								{
+									"name": "Find by valid Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response contains a pet object\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an('object');",
+													"    pm.expect(jsonData).to.have.property('id', 123);",
+													"});",
+													"",
+													"pm.test(\"Pet has valid properties\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('name');",
+													"    pm.expect(jsonData).to.have.property('status');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "7b256488-38f6-427b-b5a4-b15ede0ca044",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/pet/123"
+									},
+									"response": []
+								}
+							],
+							"id": "d2664392-f9dd-44b0-94be-6f464fa7655b"
+						},
+						{
+							"name": "Negative Scenarios",
+							"item": [
+								{
+									"name": "Find by non existent Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});",
+													"",
+													"pm.test(\"Error message for pet not found\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('Pet not found');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "cb31c3d5-343e-4913-a233-a0c98a082300",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/pet/9223372016900017000"
+									},
+									"response": []
+								},
+								{
+									"name": "Find by invalid pet id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Error message for invalid input\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('invalid');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "e28d0555-ab08-4543-a7f1-243dcf84e183",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/pet/invalid"
+									},
+									"response": []
+								}
+							],
+							"id": "3cfbe41f-80f1-42e3-927f-3af949dd9f4f"
+						}
+					],
+					"id": "55394d9c-45e5-47b6-8c74-707b4d9e0439",
+					"description": "This folder contains test scenarios for the endpoint - Find pet by Id\n\n**Positive Scenarios:**\n\n1. Find by valid Id\n    \n\n**Negative Scenarios:**\n\n1. Find by non existent Id\n    \n2. Find by invalid Pet Id"
+				},
+				{
+					"name": "Update a pet in the store with form data",
+					"item": [
+						{
+							"name": "Positive Scenarios",
+							"item": [
+								{
+									"name": "update with valid Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Pet is updated successfully\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message', '123'); // The pet ID",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "e09bbc57-2bda-4986-92fd-0945c3512741",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "doggie",
+													"type": "text"
+												},
+												{
+													"key": "status",
+													"value": "available",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/pet/123",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"123"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "timtam",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update with valid Id | only name",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Pet is updated successfully\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message', '123'); // The pet ID",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "416bb623-537f-453c-8e6d-210da54d52e4",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "doggie",
+													"type": "text"
+												},
+												{
+													"key": "status",
+													"value": "available",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/pet/123?name=timtam",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"123"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "timtam"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update with valid Id | only status",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Pet is updated successfully\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message', '123'); // The pet ID",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "8798a3d3-4763-4431-a884-a8b46ebd8649",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "doggie",
+													"type": "text"
+												},
+												{
+													"key": "status",
+													"value": "available",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/pet/123",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"123"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "timtam",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "01770b11-a3ca-4b2c-b2ad-ebe967a3ba71"
+						},
+						{
+							"name": "Negative Scenarios",
+							"item": [
+								{
+									"name": "update with non existent Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});",
+													"",
+													"pm.test(\"Error message for pet not found\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('not found');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "58d863ef-288c-4c43-b788-02024dccfe89",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "nonexistent",
+													"type": "text"
+												},
+												{
+													"key": "status",
+													"value": "available",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{baseUrl}}/pet/9223372016900017000"
+									},
+									"response": []
+								},
+								{
+									"name": "update with invalid pet id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 405\", function () {",
+													"    pm.response.to.have.status(405);",
+													"});",
+													"",
+													"pm.test(\"Error message for invalid input\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('invalid');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "98cbe4dd-54c4-4ccb-b974-2d34c2f43ff6",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "newname",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{baseUrl}}/pet/invalid"
+									},
+									"response": []
+								}
+							],
+							"id": "cc07ddf2-af6a-495e-9afb-c94b86667df5"
+						}
+					],
+					"id": "a985ab97-0703-41b7-8515-d6eeaf05bf41",
+					"description": "This folder contains test scenarios for the endpoint - Find pet by Id\n\n**Positive Scenarios:**\n\n1. update with valid Id\n    \n2. update with valid Id | only name\n    \n3. update with valid Id | only status\n    \n\n**Negative Scenarios:**\n\n1. update with non existent Id\n    \n2. update with invalid Pet Id"
+				},
+				{
+					"name": "Delete a pet",
+					"item": [
+						{
+							"name": "Positive Scenarios",
+							"item": [
+								{
+									"name": "delete a valid Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Pet is updated successfully\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message', '123'); // The pet ID",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "b30371ff-408d-4a3f-82a2-b94083bce71b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "doggie",
+													"type": "text"
+												},
+												{
+													"key": "status",
+													"value": "available",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/pet/123",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"pet",
+												"123"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "timtam",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "1a2e8a44-16be-42a9-95d4-c06b72de90ec"
+						},
+						{
+							"name": "Negative Scenarios",
+							"item": [
+								{
+									"name": "delete a non existent Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});",
+													"",
+													"pm.test(\"Error message for pet not found\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('not found');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "2de362b0-cdc0-4b5c-a9db-821f86c27040",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": "{{baseUrl}}/pet/9223372016900017000"
+									},
+									"response": []
+								},
+								{
+									"name": "delete a invalid pet id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a1ced270-8e62-4b96-b74c-f7226067c28d",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Error message for invalid input\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('invalid');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "e2bf8478-27fd-410a-bc23-8f0315d9d587",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": []
+										},
+										"url": "{{baseUrl}}/pet/invalid"
+									},
+									"response": []
+								}
+							],
+							"id": "0e653e97-4902-4748-af93-b997ce48f2b3"
+						}
+					],
+					"id": "fa196d45-c5e0-4562-a9b2-f36c356eeec4",
+					"description": "This folder contains test scenarios for the endpoint - Find pet by Id\n\n**Positive Scenarios:**\n\n1. Delete a valid Id\n    \n\n**Negative Scenarios:**\n\n1. Delete a non existent Id\n    \n2. Delete an invalid Pet Id"
 				}
 			],
 			"id": "99757401-b176-4252-9240-8730e8a25b09"
