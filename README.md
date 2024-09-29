@@ -57,7 +57,7 @@ After the tests are executed via GitHub Actions, a detailed test report is avail
 
 1. Go to the **Actions** tab in the repository.
 2. Select the latest workflow run.
-3. In the **Summary** section, you can view the logs and test results for the PET endpoint API tests.
+3. In the **Run API tests** section, you can view the logs and test results for the PET endpoint API tests.
 
 ---
 
