@@ -1384,6 +1384,258 @@
 					],
 					"id": "068df17c-3d7b-4673-b4df-9b30c10a20f2",
 					"description": "This folder contains test scenarios for the endpoint - Get Pets by status.\n\n**Positive Scenarios:**\n\n1. Get pets with \"available\" status\n    \n2. Get pets with \"pending\" status\n    \n3. Get pets with \"sold\" status\n    \n\n**Negative Scenarios:**\n\n1. Get pets with no status parameter\n    \n2. Get pets with \"invalid\" status"
+				},
+				{
+					"name": "Pet | Upload Image",
+					"item": [
+						{
+							"name": "Positive Scenarios",
+							"item": [
+								{
+									"name": "Successful upload",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "54e84e4f-5add-4d80-9f17-73ed0e33dcd2",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response contains upload confirmation\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('uploaded');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "6c8bd31d-4cc7-455b-941b-a96bf5d9a1bf",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "additionalMetadata",
+													"value": "Fish",
+													"type": "text"
+												},
+												{
+													"key": "file",
+													"type": "file",
+													"fileNotInWorkingDirectoryWarning": "This file isn't in your working directory. Teammates you share this request with won't be able to use this file. To make collaboration easier you can setup your working directory in Settings.",
+													"filesNotInWorkingDirectory": [
+														"/Users/monishasuresh/Documents/code/EmploymentTests/CBA/PetPhotos/bluefish1.jpeg"
+													],
+													"src": "postman-cloud:///1ef7d9ed-db47-4270-971e-488b0192c9b6"
+												}
+											]
+										},
+										"url": "{{baseUrl}}/pet/{{Pet1Id}}/uploadImage"
+									},
+									"response": []
+								}
+							],
+							"id": "8e4e5d9c-fd7c-46f7-93b5-83845de52de6"
+						},
+						{
+							"name": "Negative Scenarios",
+							"item": [
+								{
+									"name": "No file selected",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "54e84e4f-5add-4d80-9f17-73ed0e33dcd2",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Error message for missing file\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('no file');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "a36ddc48-d78a-4ae3-9de6-08a7063ab407",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "file",
+													"type": "file",
+													"value": null
+												},
+												{
+													"key": "additionalMetadata",
+													"value": "no file uploaded",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{baseUrl}}/pet/{{Pet1Id}}/uploadImage"
+									},
+									"response": []
+								},
+								{
+									"name": "invalid file type | txt file",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "54e84e4f-5add-4d80-9f17-73ed0e33dcd2",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);  // Expecting a bad request or unsupported media type",
+													"});",
+													"",
+													"pm.test(\"Error message for invalid file type\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(pm.response.text()).to.include(\"invalid file type\");",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "711576af-0352-478c-8cb7-6bbc3f95756c",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "file",
+													"type": "file",
+													"src": "postman-cloud:///1ef7e30f-0f59-4110-851b-155f76517bb6"
+												},
+												{
+													"key": "additionalMetadata",
+													"value": "txt file",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{baseUrl}}/pet/{{Pet1Id}}/uploadImage"
+									},
+									"response": []
+								},
+								{
+									"name": "No metdata information",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "54e84e4f-5add-4d80-9f17-73ed0e33dcd2",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response contains upload confirmation\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('uploaded');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "3c3b367e-8a40-4bbc-ac39-e3480e7e588e",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "file",
+													"type": "file",
+													"src": "postman-cloud:///1ef7d9ed-db47-4270-971e-488b0192c9b6"
+												}
+											]
+										},
+										"url": "{{baseUrl}}/pet/{{Pet1Id}}/uploadImage"
+									},
+									"response": []
+								},
+								{
+									"name": "pet id incorrect value",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "54e84e4f-5add-4d80-9f17-73ed0e33dcd2",
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});",
+													"",
+													"pm.test(\"Response contains NumberFormatException\", function () {",
+													"    const jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.have.property('message').that.includes('NumberFormatException');",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "3dbbc82f-5a0b-46da-8b47-723cbe4c4dee",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "file",
+													"type": "file",
+													"src": "postman-cloud:///1ef7d9ed-db47-4270-971e-488b0192c9b6"
+												}
+											]
+										},
+										"url": "{{baseUrl}}/pet/abc/uploadImage"
+									},
+									"response": []
+								}
+							],
+							"id": "e3b2893e-0bd5-452d-acc3-dfcc4766fb0b"
+						}
+					],
+					"id": "21756b83-2348-4785-84db-349076154f3c"
 				}
 			],
 			"id": "99757401-b176-4252-9240-8730e8a25b09"
